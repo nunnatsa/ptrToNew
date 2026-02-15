@@ -1,0 +1,24 @@
+package a
+
+import (
+	"a/b"
+)
+
+func complexScenarios() {
+	_ = &b.TestType{
+		A: new(string(b.H1)),   // want `use the "new" operator instead of k8sptr\.To; new\(string\(b\.H1\)\)`
+		B: new(b.IntFunc()),    // want `use the "new" operator instead of k8sptr\.To; new\(b.IntFunc\(\)\)`
+		C: new(true),           // want `use the "new" operator instead of k8sptr\.To; new\(true\)`
+		D: new(float32(12.34)), // want `use the "new" operator instead of k8sptr\.To; new\(float32\(12\.34\)\)`
+		E: &b.Nested{
+			F: new(uint64(56)), // want `use the "new" operator instead of k8sptr\.To; new\(uint64\(56\)\)`
+		},
+		I: new(b.H2), // want `use the "new" operator instead of k8sptr\.To; new\(b\.H2\)`
+	}
+
+	f1(new(42), new(false)) // want `use the "new" operator instead of k8sptr\.To; new\(42\)` `use the "new" operator instead of k8sptr\.To; new\(false\)`
+}
+
+func f1(_ *int, _ *bool) {
+	// no implementation
+}
