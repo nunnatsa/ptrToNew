@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    if: github.repository == 'nunnatsa/ptrToNew'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Set up Go
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: go.mod
+
+    - name: Unit Tests
+      run: make test
+
+    - name: Build All Platforms
+      run: make build-all
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        generate_release_notes: true
+        files: |
+          bin/ptrToNew-linux-amd64
+          bin/ptrToNew-linux-arm64
+          bin/ptrToNew-darwin-amd64
+          bin/ptrToNew-darwin-arm64
+          bin/ptrToNew-windows-amd64.exe
+          bin/ptrToNew-windows-arm64.exe
