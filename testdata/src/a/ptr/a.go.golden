@@ -1,0 +1,16 @@
+package ptr
+
+func f() uint64 {
+	return 42
+}
+
+const int42 = 42
+
+var (
+	_ *bool = new(true)         // want `replace ptr\.To\(true\) with the "new\(\)" built-in function: new\(true\)`
+	_ *string = new("a string") // want `replace ptr\.To\("a string"\) with the "new\(\)" built-in function: new\("a string"\)`
+	_ *int = new(int42)         // want `replace ptr\.To\(int42\) with the "new\(\)" built-in function: new\(int42\)`
+	_ *int32 = new(int32(10))   // want `replace ptr\.To\(int32\(10\)\) with the "new\(\)" built-in function: new\(int32\(10\)\)`
+	_ *int32 = new(int32(10))   // want `replace ptr\.To\[int32\]\(10\) with the "new\(\)" built-in function: new\(int32\(10\)\)`
+	_ *uint64 = new(f())        // want `replace ptr\.To\(f\(\)\) with the "new\(\)" built-in function: new\(f\(\)\)`
+)

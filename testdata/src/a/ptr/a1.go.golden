@@ -1,0 +1,24 @@
+package ptr
+
+import (
+	"a/b"
+)
+
+func complexScenarios() {
+	_ = &b.TestType{
+		A: new(string(b.H1)),   // want `replace k8sptr\.To\(string\(b\.H1\)\) with the "new\(\)" built-in function: new\(string\(b\.H1\)\)`
+		B: new(b.IntFunc()),    // want `replace k8sptr\.To\(b\.IntFunc\(\)\) with the "new\(\)" built-in function: new\(b\.IntFunc\(\)\)`
+		C: new(true),           // want `replace k8sptr\.To\(true\) with the "new\(\)" built-in function: new\(true\)`
+		D: new(float32(12.34)), // want `replace k8sptr\.To\[float32\]\(12\.34\) with the "new\(\)" built-in function: new\(float32\(12\.34\)\)`
+		E: &b.Nested{
+			F: new(uint64(56)), // want `replace k8sptr\.To\(uint64\(56\)\) with the "new\(\)" built-in function: new\(uint64\(56\)\)`
+		},
+		I: new(b.H2), // want `replace k8sptr\.To\(b\.H2\) with the "new\(\)" built-in function: new\(b\.H2\)`
+	}
+
+	f1(new(42), new(false)) // want `replace k8sptr\.To\(42\) with the "new\(\)" built-in function: new\(42\)` `replace k8sptr\.To\(false\) with the "new\(\)" built-in function: new\(false\)`
+}
+
+func f1(_ *int, _ *bool) {
+	// no implementation
+}

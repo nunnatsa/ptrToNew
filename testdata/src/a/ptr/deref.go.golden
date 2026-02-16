@@ -1,4 +1,4 @@
-package a
+package ptr
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 func useDeref() {
-	a := new(true) // want `use the "new\(\)" builtin function instead of ptr\.To; new\(true\)`
+	a := new(true) // want `replace ptr\.To\(true\) with the "new\(\)" built-in function: new\(true\)`
 	if val := ptr.Deref(a, false); val {
 		fmt.Println(val)
 	}
