@@ -1,15 +1,20 @@
 # ptrToNew
 
 A Go static analysis tool that finds usages of
-`k8s.io/utils/ptr.To()` and suggests replacing them with
-the built-in `new()` function.
+`k8s.io/utils/ptr.To()` and the deprecated
+`k8s.io/utils/pointer` typed helper functions, and
+suggests replacing them with the built-in `new()`
+function.
 
 In Go 1.26, the built-in `new` function now allows its
 operand to be an expression, specifying the initial value
 of the variable (previously it only accepted a type). This
-makes `k8s.io/utils/ptr.To()` unnecessary.
+makes `k8s.io/utils/ptr.To()` and
+`k8s.io/utils/pointer.*()` unnecessary.
 
 ## Before and After
+
+### `k8s.io/utils/ptr`
 
 | Before | After |
 |---|---|
@@ -18,6 +23,18 @@ makes `k8s.io/utils/ptr.To()` unnecessary.
 | `ptr.To(int32(10))` | `new(int32(10))` |
 | `ptr.To[int32](10)` | `new(int32(10))` |
 | `ptr.To(myFunc())` | `new(myFunc())` |
+
+### `k8s.io/utils/pointer`
+
+| Before | After |
+|---|---|
+| `pointer.String("hello")` | `new("hello")` |
+| `pointer.Bool(true)` | `new(true)` |
+| `pointer.Int(42)` | `new(42)` |
+| `pointer.Int32(42)` | `new(int32(42))` |
+| `pointer.Float64(3.14)` | `new(3.14)` |
+| `pointer.Float32(3.14)` | `new(float32(3.14))` |
+| `pointer.Duration(d)` | `new(d)` |
 
 The tool also handles custom import aliases
 (e.g. `import k8sptr "k8s.io/utils/ptr"`).

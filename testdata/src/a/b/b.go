@@ -18,6 +18,8 @@ func IntFunc() int {
 }
 
 const G = 42
+const UG = uint(42)
+const FG = 42.0
 
 type H string
 
