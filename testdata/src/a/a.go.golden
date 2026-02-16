@@ -9,11 +9,11 @@ func f() uint64 {
 }
 
 func ptring() {
-	a := new(true)         // want `use the "new" operator instead of ptr\.To; new\(true\)`
-	b := new("a string")   // want `use the "new" operator instead of ptr\.To; new\("a string"\)`
-	c := new(int32(10))    // want `use the "new" operator instead of ptr\.To; new\(int32\(10\)\)`
-	var d = new(int32(10)) // want `use the "new" operator instead of ptr\.To; new\(int32\(10\)\)`
-	var e = new(f())       // want `use the "new" operator instead of ptr\.To; new\(f\(\)\)`
+	a := new(true)         // want `use the "new\(\)" builtin function instead of ptr\.To; new\(true\)`
+	b := new("a string")   // want `use the "new\(\)" builtin function instead of ptr\.To; new\("a string"\)`
+	c := new(int32(10))    // want `use the "new\(\)" builtin function instead of ptr\.To; new\(int32\(10\)\)`
+	var d = new(int32(10)) // want `use the "new\(\)" builtin function instead of ptr\.To; new\(int32\(10\)\)`
+	var e = new(f())       // want `use the "new\(\)" builtin function instead of ptr\.To; new\(f\(\)\)`
 
 	fmt.Println(a, b, c, d, e)
 }
