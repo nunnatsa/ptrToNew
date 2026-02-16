@@ -52,7 +52,7 @@ func run(pass *analysis.Pass) (any, error) {
 				Message:  fmt.Sprintf(`use the "new" operator instead of %s.To; %s`, ptrName, suggestionText),
 				SuggestedFixes: []analysis.SuggestedFix{
 					{
-						Message: "",
+						Message: "Replace with new()",
 						TextEdits: []analysis.TextEdit{
 							{
 								Pos:     n.Pos(),
