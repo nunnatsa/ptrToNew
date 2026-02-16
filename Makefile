@@ -1,4 +1,4 @@
-BUMP ?= "patch"
+BUMP ?= patch
 
 .PHONY: build
 build:
