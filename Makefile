@@ -17,7 +17,11 @@ build-all:
 test:
 	go test ./...
 
+.PHONY: bump-version
+bump-version:
+	./hack/bump_version.sh $(BUMP)
+
 .PHONY: release
 release:
-	./hack/release.sh $(BUMP)
-
+	./hack/release.sh
+	$(MAKE) bump-version BUMP=$(BUMP)
