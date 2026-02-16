@@ -15,7 +15,7 @@ function validate_main_branch() {
     return 1
   fi
 
-  if [[ -n "$(git status --porcelain)" ]]; then
+  if [[ -n "$(git status --porcelain -u no)" ]]; then
     echo "Error: working tree is not clean. Commit or stash changes first." >&2
     return 1
   fi
