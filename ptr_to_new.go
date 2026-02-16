@@ -3,6 +3,7 @@ package ptrtonew
 import (
 	"fmt"
 	"go/ast"
+	"os"
 	"ptrtonew/formatter"
 	"slices"
 
@@ -42,14 +43,20 @@ func run(pass *analysis.Pass) (any, error) {
 				value = &ast.CallExpr{Fun: casting, Args: []ast.Expr{value}}
 			}
 
+			pos := pass.Fset.Position(n.Pos()).String()
 			suggestion := &ast.CallExpr{Fun: ast.NewIdent("new"), Args: []ast.Expr{value}}
-			suggestionText := format.Format(suggestion)
+			suggestionText, err := format.Format(suggestion)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "cannot generate suggestion text in %s; %v\n", pos, err)
+				pass.Reportf(n.Pos(), `use the "new()" builtin function instead of %s.To`, ptrName)
+				return false
+			}
 
 			pass.Report(analysis.Diagnostic{
 				Pos:      n.Pos(),
 				End:      n.End(),
 				Category: "modernize",
-				Message:  fmt.Sprintf(`use the "new" operator instead of %s.To; %s`, ptrName, suggestionText),
+				Message:  fmt.Sprintf(`use the "new()" builtin function instead of %s.To; %s`, ptrName, suggestionText),
 				SuggestedFixes: []analysis.SuggestedFix{
 					{
 						Message: "Replace with new()",
