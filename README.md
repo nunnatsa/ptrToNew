@@ -91,11 +91,15 @@ ptrToNew version
 ## How It Works
 
 ptrToNew scans Go source files for imports of
-`k8s.io/utils/ptr`. In files that import it, the tool
-walks the AST looking for calls to `ptr.To(value)` or
-`ptr.To[Type](value)` and reports a diagnostic with a
-suggested fix that replaces the call with `new(value)` or
-`new(Type(value))`, respectively.
+`k8s.io/utils/ptr` and `k8s.io/utils/pointer`. In files
+that import them, the tool walks the AST looking for
+calls to `ptr.To(value)`, `ptr.To[Type](value)`, or the
+typed `pointer.*()` helpers and reports a diagnostic with
+a suggested fix that replaces the call with `new(value)`
+or `new(Type(value))`, respectively. For `pointer.*`
+functions, it adds a type cast only when needed (e.g.
+`pointer.Int32(42)` becomes `new(int32(42))` but
+`pointer.Int(42)` becomes `new(42)`).
 
 All diagnostics are reported under the `"modernize"`
 category.
