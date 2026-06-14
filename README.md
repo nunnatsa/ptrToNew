@@ -46,7 +46,7 @@ The tool also handles custom import aliases
 ## Installation
 
 ```bash
-go install ptrtonew/cmd/ptr_to_new@latest
+go install github.com/nunnatsa/ptrtonew/cmd/ptr_to_new@latest
 ```
 
 Or build from source:
