@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/tools/go/analysis/singlechecker"
 
-	"ptrtonew"
+	"github.com/nunnatsa/ptrtonew"
 )
 
 //go:embed version.txt
