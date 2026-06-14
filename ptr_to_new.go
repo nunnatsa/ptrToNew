@@ -5,11 +5,12 @@ import (
 	"go/ast"
 	"go/types"
 	"os"
-	"ptrtonew/formatter"
 	"slices"
 
 	"github.com/go-toolsmith/astcopy"
 	"golang.org/x/tools/go/analysis"
+
+	"github.com/nunnatsa/ptrtonew/formatter"
 )
 
 func NewAnalyzer() *analysis.Analyzer {

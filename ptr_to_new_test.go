@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/tools/go/analysis/analysistest"
 
-	"ptrtonew"
+	"github.com/nunnatsa/ptrtonew"
 )
 
 func TestAnalyzer(t *testing.T) {
